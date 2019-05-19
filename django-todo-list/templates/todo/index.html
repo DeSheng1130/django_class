@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <div class="row">
+    <div class="col">
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'todo:new' %}" class="btn btn-info float-right">New</a>
+      {% endif %}
+      <h1>TODO List</h1>
+      <hr>
+      <div class="list-group">
+        {% for todo in todos %}
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'todo:show' todo.id %}" class="list-group-item list-group-item-action">{{ todo.title }}</a>
+          {% endif %}
+        {% empty %}
+          <button type="button" class="list-group-item list-group-item-action" disabled>
+            No Todo!!!
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
